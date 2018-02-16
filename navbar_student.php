@@ -7,8 +7,8 @@
                 <a class="brand" href="dashboard_student.php">Welcome to: Bacoor Parochial school of St. Michael the Archangel, Inc. Web Portal</a>
 					<div class="nav-collapse collapse">
 						<ul class="nav pull-right">
-							<?php $query= mysql_query("select * from student where student_id = '$session_id'")or die(mysql_error());
-									$row = mysql_fetch_array($query);
+							<?php $query= fetchData($con,"select * from student where student_id = '$session_id'");
+									$row = $query->fetch_array();
 							?>
 							<li class="dropdown">
 								<a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user icon-large">  </i><?php echo $row['firstname']." ".$row['middlename']." ".$row['lastname'];  ?> <i class="caret"></i></a>

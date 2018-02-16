@@ -6,14 +6,16 @@
 		
 		/* student */
 			$query = "SELECT * FROM student WHERE username='$username' AND password='".md5($password)."'";
-			$result = mysql_query($query)or die(mysql_error());
-			$row = mysql_fetch_array($result);
-			$num_row = mysql_num_rows($result);
+			$result = fetchData($con,$query);
+			$row = $result->fetch_array();
+			$num_row = $result->num_rows;
+			
 		/* teacher */
-			$query_teacher = mysql_query("SELECT * FROM teacher WHERE username='$username' AND password='".md5($password)."'")or die(mysql_error());
-			$result = mysql_query($query)or die(mysql_error());
-			$num_row_teacher = mysql_num_rows($query_teacher);
-			$row_teahcer = mysql_fetch_array($query_teacher);
+			$query_teacher = "SELECT * FROM teacher WHERE username='$username' AND password='".md5($password)."'";
+			$result = fetchData($con,$query_teacher);
+			$num_row_teacher = $result->num_rows;
+			$row_teahcer = $result->fetch_array();
+			
 		
 		if( $num_row > 0 ) 
 		{ 

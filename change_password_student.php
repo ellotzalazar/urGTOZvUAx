@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->	
 					     <ul class="breadcrumb">
 								<?php
-								$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-								$school_year_query_row = mysql_fetch_array($school_year_query);
+								$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+								$school_year_query_row = $school_year_query->fetch_array();
 								$school_year = $school_year_query_row['school_year'];
 								?>
 								<li><a href="#"><b>Change Password</b></a><span class="divider">/</span></li>
@@ -28,8 +28,8 @@
                                 <div class="span12">
   								<div class="alert alert-info"><i class="icon-info-sign"></i> Please Fill in required details</div>
 								<?php
-								$query = mysql_query("select * from student where student_id = '$session_id'")or die(mysql_error());
-								$row = mysql_fetch_array($query);
+									$query = fetchData($con,"select * from student where student_id = '$session_id'");
+									$row = $query->fetch_array();
 								?>								
 										
 								    <form  method="post" id="change_password" class="form-horizontal">
@@ -61,36 +61,47 @@
 									
 												<script>
 			jQuery(document).ready(function(){
-			jQuery("#change_password").submit(function(e){
-					e.preventDefault();
-						
+			jQuery("#change_password").submit(function(){
+						var formData = $(this).serialize();
 						var password = jQuery('#password').val();
 						var current_password = jQuery('#current_password').val();
 						var new_password = jQuery('#new_password').val();
 						var retype_password = jQuery('#retype_password').val();
-						if (password != current_password)
-						{
-						$.jGrowl("Password does not match with your current password  ", { header: 'Change Password Failed' });
-						}else if  (new_password != retype_password){
-						$.jGrowl("Password does not match with your new password  ", { header: 'Change Password Failed' });
-						}else if ((password == current_password) && (new_password == retype_password)){
-					var formData = jQuery(this).serialize();
-					$.ajax({
-						type: "POST",
-						url: "update_password_student.php",
-						data: formData,
-						success: function(html){
-					
-						$.jGrowl("Your password is successfully change", { header: 'Change Password Success' });
-						var delay = 2000;
-							setTimeout(function(){ window.location = 'dashboard_student.php'  }, delay);  
 						
-						}
+						$.post('compare_password.php',{'new':current_password,'old':password})
+							.done(function(result){
+								if (result == 'false')
+								{
+									$.jGrowl("Password does not match with your current password  ", { header: 'Change Password Failed' });
+									return false;
+								}
+								else
+								{
+									password = result;
+									if  (new_password != retype_password){
+										$.jGrowl("Password does not match with your new password  ", { header: 'Change Password Failed' });
+									}else if ((password == current_password) && (new_password == retype_password)){
+										
+										$.ajax({
+											type: "POST",
+											url: "update_password_student.php",
+											data: formData,
+											success: function(html){
+											$.jGrowl("Your password is successfully change", { header: 'Change Password Success' });
+											var delay = 2000;
+												setTimeout(function(){ window.location = 'dashboard_student.php'  }, delay);  
+											
+											}
+									
+									
+										});
+									}
+								}
+							});
 						
 						
-					});
 			
-					}
+					return false;
 				});
 			});
 			</script>

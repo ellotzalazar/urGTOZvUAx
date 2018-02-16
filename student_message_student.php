@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->	
 					     <ul class="breadcrumb">
 								<?php
-								$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-								$school_year_query_row = mysql_fetch_array($school_year_query);
+								$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+								$school_year_query_row = $school_year_query->fetch_array();
 								$school_year = $school_year_query_row['school_year'];
 								?>
 								<li><a href="#">Message</a><span class="divider">/</span></li>
@@ -46,13 +46,13 @@
 										</ul>
 									
 									<?php
-								 $query_announcement = mysql_query("select * from message
+								 $query_announcement = fetchData($con,"select * from message
 																	LEFT JOIN student ON student.student_id = message.sender_id
 																	where  message.reciever_id = '$session_id' order by date_sended DESC
-																	")or die(mysql_error());
-								$count_my_message = mysql_num_rows($query_announcement);	
+																	");
+								$count_my_message = $query_announcement->num_rows;	
 								if ($count_my_message != '0'){
-								 while($row = mysql_fetch_array($query_announcement)){	
+								 while($row = $query_announcement->fetch_array()){	
 								 $id = $row['message_id'];
 								 								 $id_2 = $row['message_id'];
 								 $status = $row['message_status'];

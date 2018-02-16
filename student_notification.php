@@ -12,8 +12,8 @@
 									
 					     <ul class="breadcrumb">
 						<?php
-						$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-						$school_year_query_row = mysql_fetch_array($school_year_query);
+						$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+						$school_year_query_row = $school_year_query->fetch_array();
 						$school_year = $school_year_query_row['school_year'];
 						?>
 							<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -47,23 +47,23 @@
 	
 								<?php } ?>
 				
-					<?php $query = mysql_query("select * from teacher_class_student
-					LEFT JOIN teacher_class ON teacher_class.teacher_class_id = teacher_class_student.teacher_class_id 
-					LEFT JOIN class ON class.class_id = teacher_class.class_id 
-					LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-					LEFT JOIN teacher ON teacher.teacher_id = teacher_class_student.teacher_id 
-					JOIN notification ON notification.teacher_class_id = teacher_class.teacher_class_id 	
-					where teacher_class_student.student_id = '$session_id' and school_year = '$school_year'  order by notification.date_of_notification DESC
-					")or die(mysql_error());
-					$count = mysql_num_rows($query);
+					<?php $query = fetchData($con,"select * from teacher_class_student
+												LEFT JOIN teacher_class ON teacher_class.teacher_class_id = teacher_class_student.teacher_class_id 
+												LEFT JOIN class ON class.class_id = teacher_class.class_id 
+												LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
+												LEFT JOIN teacher ON teacher.teacher_id = teacher_class_student.teacher_id 
+												JOIN notification ON notification.teacher_class_id = teacher_class.teacher_class_id 	
+												where teacher_class_student.student_id = '$session_id' and school_year = '$school_year'  order by notification.date_of_notification DESC
+					");
+					$count = $query->lengths['num_rows'];
 					if ($count  > 0){
-					while($row = mysql_fetch_array($query)){
+					while($row = $query->fetch_array()){
 					$get_id = $row['teacher_class_id'];
 					$id = $row['notification_id'];
 					
 					
-					$query_yes_read = mysql_query("select * from notification_read where notification_id = '$id' and student_id = '$session_id'")or die(mysql_error());
-					$read_row = mysql_fetch_array($query_yes_read);
+					$query_yes_read = fetchData($con,"select * from notification_read where notification_id = '$id' and student_id = '$session_id'");
+					$read_row = $query_yes_read->fetch_array();
 					
 					$yes = $read_row['student_read'];
 				

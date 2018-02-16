@@ -1,6 +1,5 @@
 <?php include('header_dashboard.php'); ?>
 <?php include('session.php'); ?>
-<?php include('dbcon.php'); ?>
 
 <body>
 		<?php include('navbar_student.php'); ?>
@@ -17,8 +16,8 @@
 					    <!-- breadcrumb -->	
 					     <ul class="breadcrumb">
 								<?php
-								$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-								$school_year_query_row = mysql_fetch_array($school_year_query);
+								$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+								$school_year_query_row = $school_year_query->fetch_array();
 								$school_year = $school_year_query_row['school_year'];
 								?>
 								<li><a href="#"><b>Student Profile</b></a><span class="divider">/</span></li>
@@ -35,14 +34,14 @@
                                 <div class="span12">
   								<div class="alert alert-info"><i class="icon-user"></i> Your Information</div>
 								<?php
-								$query = mysql_query("select * from student where student_id = '$session_id'")or die(mysql_error());
-								$row = mysql_fetch_array($query);
+								$query = fetchData($con,"select * from student where student_id = '$session_id'");
+								$row = $query->fetch_array();
 								?>								
 										
-								    <form  method="post" id="change_password" class="form-horizontal">
+								    <form  method="post" class="form-horizontal">
 
-								    	<?php $query= mysql_query("select * from student where student_id = '$session_id'")or die(mysql_error());
-										$row = mysql_fetch_array($query);
+								    	<?php $query= fetchData($con,"select * from student where student_id = '$session_id'");
+										$row = $query->fetch_array();
 										?>
 
 								    	<div class="control-group">
@@ -72,7 +71,7 @@
 										<div class="control-group">
 											<label class="control-label" for="inputcontact">Contact Number</label>
 											<div class="controls">
-											<input type="tel" id="" name="contact_number" maxlength="11 placeholder="" required="" value="<?php echo $row['contact_number']?>">
+											<input type="tel" id="" name="contact_number" maxlength="11" placeholder="" required="" value="<?php echo $row['contact_number']?>">
 											</div>
 										</div>
 										<div class="control-group">
@@ -83,18 +82,18 @@
 										</div>
 
 										<div class="control-group">
-											<label class="control-label" for="inputemail">Address</label>
+											<label class="control-label" for="inputaddress">Address</label>
 											<div class="controls">
-											<textarea name="address" form="usrform" placeholder="" required="" maxlength="100" > <?php echo $row['address']?> </textarea>
+											<textarea name="address"  placeholder="" required="" maxlength="100" > <?php echo $row['address']?> </textarea>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label" for="inputemail">About Your Self</label>
 											<div class="controls">
-											<textarea name="my_self" form="usrform" placeholder="" required="" maxlength="100" > <?php echo $row['my_self']?> </textarea>
+											<textarea name="my_self"  placeholder="" required="" maxlength="100" > <?php echo $row['my_self']?> </textarea>
 											</div>
 										</div>
-
+										<input type="hidden" value="<?=$row['student_id']?>" name="id">
 
 
 
@@ -110,18 +109,20 @@
 										<?php
 				                            if (isset($_POST['update'])) {
 				                               
+				                                $get_id = $_POST['id'];
 				                                $contact_number = $_POST['contact_number'];
 				                                $email = $_POST['email'];
 				                                $address = $_POST['address'];
 				                                $my_self = $_POST['my_self'];
-				                      
+												
 
-												mysql_query("update student set contact_number = '$contact' , email ='$email' , address= '$address' , my_self = '$myself' where student_id = '$get_id' ")or die(mysql_error());
-
+												executeUpdate($con,"update student set contact_number = '$contact_number' , email ='$email' , address= '$address' , my_self = '$my_self' where student_id = '$get_id' ");
+												// echo ("update student set contact_number = '$contact' , email ='$email' , address= '$address' , my_self = '$myself' where student_id = '$get_id' ");
+			
 										?>
 				 
 												<script>
-												window.location = "student_profile.php"; 
+													window.location = "student_profile.php"; 
 												</script>
 
 				                       	<?php     }  ?>
