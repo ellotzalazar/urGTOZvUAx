@@ -32,8 +32,8 @@
 										<tbody>
 											
              		<?php
-					$content_query = mysql_query("select * from content")or die(mysql_error());
-					while($row = mysql_fetch_array($content_query)){
+					$content_query = fetchData($con,"select * from content");
+					while($row = mysqli_fetch_array($content_query)){
 					$id = $row['content_id'];
 					?>
                               

@@ -1,7 +1,7 @@
 <?php
 include('dbcon.php');
 $get_id = $_GET['id'];
-mysql_query("delete from event where event_id = '$get_id'")or die(mysql_error());
+fetchData($con,"delete from event where event_id = '$get_id'");
 ?>
 <script>
 window.location = 'calendar_of_events.php';

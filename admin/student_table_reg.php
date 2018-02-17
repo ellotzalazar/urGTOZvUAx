@@ -30,8 +30,8 @@
 		<tbody>
 			
 		<?php
-	$query = mysql_query("select * from student LEFT JOIN class ON student.class_id = class.class_id where status = 'Registered' ORDER BY student.student_id DESC") or die(mysql_error());
-	while ($row = mysql_fetch_array($query)) {
+	$query = fetchData($con,"select * from student LEFT JOIN class ON student.class_id = class.class_id where status = 'Registered' ORDER BY student.student_id DESC");
+	while ($row = mysqli_fetch_array($query)) {
 		$id = $row['student_id'];
 		?>
 	

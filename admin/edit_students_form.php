@@ -7,8 +7,8 @@
                             </div>
                             <div class="block-content collapse in">
 							<?php
-							$query = mysql_query("select * from student LEFT JOIN class ON class.class_id = student.class_id where student_id = '$get_id'")or die(mysql_error());
-							$row = mysql_fetch_array($query);
+							$query = fetchData($con,"select * from student LEFT JOIN class ON class.class_id = student.class_id where student_id = '$get_id'");
+							$row = mysqli_fetch_array($query);
 							?>
                                 <div class="span12">
 								<form method="post">
@@ -19,8 +19,8 @@
                                             <select  name="cys" class="" required>
                                              	<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
 											<?php
-											$cys_query = mysql_query("select * from class order by class_name");
-											while($cys_row = mysql_fetch_array($cys_query)){
+											$cys_query = fetchData($con,"select * from class order by class_name");
+											while($cys_row = mysqli_fetch_array($cys_query)){
 											
 											?>
 											<option value="<?php echo $cys_row['class_id']; ?>"><?php echo $cys_row['class_name']; ?></option>
@@ -72,7 +72,7 @@
                                 $cys = $_POST['cys'];
                       
 
-								mysql_query("update student set username = '$un' , firstname ='$fn' , lastname = '$ln' , class_id = '$cys' where student_id = '$get_id' ")or die(mysql_error());
+								fetchData($con,"update student set username = '$un' , firstname ='$fn' , lastname = '$ln' , class_id = '$cys' where student_id = '$get_id' ");
 
 								?>
  

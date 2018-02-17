@@ -34,8 +34,8 @@
 										</thead>
 										<tbody>
 												 <?php
-                                    $teacher_query = mysql_query("select * from teacher") or die(mysql_error());
-                                    while ($row = mysql_fetch_array($teacher_query)) {
+                                    $teacher_query = fetchData($con,"select * from teacher");
+                                    while ($row = mysqli_fetch_array($teacher_query)) {
                                     $id = $row['teacher_id'];
                                         ?>
 									<tr>

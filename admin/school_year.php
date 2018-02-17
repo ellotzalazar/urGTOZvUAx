@@ -30,8 +30,8 @@
 										</thead>
 										<tbody>
 													<?php
-													$user_query = mysql_query("select * from school_year")or die(mysql_error());
-													while($row = mysql_fetch_array($user_query)){
+													$user_query = fetchData($con,"select * from school_year");
+													while($row = mysqli_fetch_array($user_query)){
 													$id = $row['school_year_id'];
 													?>
 									

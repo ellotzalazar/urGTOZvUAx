@@ -17,8 +17,8 @@
 		                            <div class="block-content collapse in">
 									<a href="content.php"><i class="icon-arrow-left"></i> Back</a>
 									   <?php
-									   $query = mysql_query("select * from content where content_id = '$get_id'")or die(mysql_error());
-									   $row = mysql_fetch_array($query);
+									   $query = fetchData($con,"select * from content where content_id = '$get_id'");
+									   $row = mysqli_fetch_array($query);
 									   ?>
 									   
 									   <form class="form-horizontal" method="POST">
@@ -52,7 +52,7 @@
 										if (isset($_POST['update'])){
 										$title = $_POST['title'];
 										$content = $_POST['content'];
-										mysql_query("update content set title = '$title' , content = '$content' where content_id = '$get_id'")or die(mysql_error());
+										fetchData($con,"update content set title = '$title' , content = '$content' where content_id = '$get_id'");
 										?>
 										<script>
 										window.location = 'content.php';

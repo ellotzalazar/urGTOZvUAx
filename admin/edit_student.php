@@ -36,8 +36,8 @@
 										<tbody>
 											
                                          <?php
-                                    $query = mysql_query("select * from student LEFT JOIN class ON class.class_id = student.class_id ORDER BY student.student_id DESC") or die(mysql_error());
-                                    while ($row = mysql_fetch_array($query)) {
+                                    $query = fetchData($con,"select * from student LEFT JOIN class ON class.class_id = student.class_id ORDER BY student.student_id DESC");
+                                    while ($row = mysqli_fetch_array($query)) {
                                         $id = $row['student_id'];
                                         ?>
 

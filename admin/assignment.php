@@ -31,10 +31,10 @@
 										<tbody>
 											
                               		<?php
-										$query = mysql_query("select * FROM assignment LEFT JOIN teacher ON teacher.teacher_id = assignment.teacher_id 
+										$query = fetchdata($con,"select * FROM assignment LEFT JOIN teacher ON teacher.teacher_id = assignment.teacher_id 
 																				  LEFT JOIN teacher_class ON teacher_class.teacher_class_id = assignment.class_id 
-																				  INNER JOIN class ON class.class_id = teacher_class.class_id  ")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+																				  INNER JOIN class ON class.class_id = teacher_class.class_id  ");
+										while($row = mysqli_fetch_array($query)){
 									?>
 							
 

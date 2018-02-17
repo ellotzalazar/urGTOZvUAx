@@ -15,8 +15,8 @@
                                             <select  name="class_id" class="" required>
                                           	<option></option>
 											<?php
-											$cys_query = mysql_query("select * from class order by class_name");
-											while($cys_row = mysql_fetch_array($cys_query)){
+											$cys_query = fetchData($con,"select * from class order by class_name");
+											while($cys_row = mysqli_fetch_array($cys_query)){
 											
 											?>
 											<option value="<?php echo $cys_row['class_id']; ?>"><?php echo $cys_row['class_name']; ?></option>
