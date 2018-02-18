@@ -40,5 +40,8 @@
 						<li>
                             <a href="calendar_of_events.php"><i class="icon-chevron-right"></i><i class="icon-calendar"></i>Calendar of Events</a>
                         </li>
+						<li>
+                            <a href="attendance.php"><i class="icon-chevron-right"></i><i class="icon-calendar"></i>Attendance</a>
+                        </li>
                     </ul>
                 </div>

@@ -12,6 +12,10 @@ $con = mysqli_connect('localhost','root','','thewebportal');
 	mysqli_query($conn,$query);
 	mysqli_close($conn);
  }
+ function executeInsert($conn,$query)
+ {
+	mysqli_query($conn,$query);
+ }
  
  function fetchData($conn,$query = '')
  {
