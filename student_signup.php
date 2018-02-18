@@ -7,13 +7,13 @@ $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $class_id = $_POST['class_id'];
 
-$query = mysql_query("select * from student where username='$username' and firstname='$firstname' and lastname='$lastname' and class_id = '$class_id'")or die(mysql_error());
-$row = mysql_fetch_array($query);
+$query = fetchData($con,"select * from student where username='$username' and firstname='$firstname' and lastname='$lastname' and class_id = '$class_id'");
+$row = mysqli_fetch_array($query);
 $id = $row['student_id'];
 
-$count = mysql_num_rows($query);
+$count = mysqli_num_rows($query);
 if ($count > 0){
-	mysql_query("update student set password = '".md5($password)."', status = 'Registered' where student_id = '$id'")or die(mysql_error());
+	fetchData($con,"update student set password = '".md5($password)."', status = 'Registered' where student_id = '$id'");
 	$_SESSION['id']=$id;
 	echo 'true';
 }else{

@@ -7,13 +7,13 @@ $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $department_id = $_POST['department_id'];
 
-$query = mysql_query("select * from teacher where  firstname='$firstname' and lastname='$lastname' and username='$username' and department_id = '$department_id'")or die(mysql_error());
-$row = mysql_fetch_array($query);
+$query = fetchData($con,"select * from teacher where  firstname='$firstname' and lastname='$lastname' and username='$username' and department_id = '$department_id'");
+$row = mysqli_fetch_array($query);
 $id = $row['teacher_id'];
 
-$count = mysql_num_rows($query);
+$count = mysqli_num_rows($query);
 if ($count > 0){
-	mysql_query("update teacher set password = '".md5($password)."', teacher_status = 'Registered' where teacher_id = '$id'")or die(mysql_error());
+	fetchData($con,"update teacher set password = '".md5($password)."', teacher_status = 'Registered' where teacher_id = '$id'");
 	$_SESSION['id']=$id;
 	echo 'true';
 }else{

@@ -12,11 +12,11 @@
 				<div class="pull-right">
 							<a href="my_students.php<?php echo '?id='.$get_id; ?>" class="btn btn-info"><i class="icon-arrow-left"></i> Back</a>
 						</div>
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 				
 					     <ul class="breadcrumb">
@@ -61,10 +61,10 @@
 							
 							
 										$a = 0 ;
-										$query = mysql_query("select * from student LEFT JOIN class on class.class_id = student.class_id
+										$query = fetchData($con,"select * from student LEFT JOIN class on class.class_id = student.class_id
 												
-										") or die(mysql_error());
-										while ($row = mysql_fetch_array($query)) {
+										");
+										while ($row = mysqli_fetch_array($query)) {
                                         $id = $row['student_id'];
 										$a++;
 									
@@ -119,8 +119,8 @@ if (isset($_POST['submit'])){
 	$teacher_id = $_POST[$test3];
 	$Add = $_POST[$test4];
 	
- 	$query = mysql_query("select * from teacher_class_student where student_id = '$id' and teacher_class_id = '$class_id' ")or die(mysql_error());
-	$count = mysql_num_rows($query); 
+ 	$query = fetchData($con,"select * from teacher_class_student where student_id = '$id' and teacher_class_id = '$class_id' ");
+	$count = mysqli_num_rows($query); 
 	
  	if ($count > 0){ ?>
 	<script>
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])){
 	if($Add == 'Add'){
 	
 	
-	mysql_query("insert into teacher_class_student (student_id,teacher_class_id,teacher_id) values('$id','$class_id','$teacher_id') ")or die(mysql_error());
+	fetchData($con,"insert into teacher_class_student (student_id,teacher_class_id,teacher_id) values('$id','$class_id','$teacher_id') ");
 	
 	
 	}else{

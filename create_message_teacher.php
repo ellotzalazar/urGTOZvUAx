@@ -23,10 +23,10 @@
                                             <select name="student_id"  class="chzn-select" required>
                                              	<option></option>
 											<?php
-											$query = mysql_query("select * from teacher_class_student
+											$query = fetchData($con,"select * from teacher_class_student
 																  LEFT JOIN student ON student.student_id = teacher_class_student.student_id
 											 group by teacher_class_student.student_id order by firstname ASC");
-											while($row = mysql_fetch_array($query)){
+											while($row = mysqli_fetch_array($query)){
 											
 											?>
 											<option value="<?php echo $row['student_id']; ?>"><?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?> </option>

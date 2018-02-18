@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->	
 					     <ul class="breadcrumb">
 								<?php
-								$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-								$school_year_query_row = mysql_fetch_array($school_year_query);
+								$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+								$school_year_query_row = mysqli_fetch_array($school_year_query);
 								$school_year = $school_year_query_row['school_year'];
 								?>
 								<li><a href="#">Message</a><span class="divider">/</span></li>
@@ -38,11 +38,11 @@
 										</ul>
 										
 									<?php
-								 $query_announcement = mysql_query("select * from message
+								 $query_announcement = fetchData($con,"select * from message
 																	LEFT JOIN teacher ON teacher.teacher_id = message.sender_id
 																	where  message.reciever_id = '$session_id' order by date_sended DESC
-																	")or die(mysql_error());
-								 while($row = mysql_fetch_array($query_announcement)){
+																	");
+								 while($row = mysqli_fetch_array($query_announcement)){
 								 $id = $row['message_id'];
 								 ?>
 											<div class="post"  id="del<?php echo $id; ?>">

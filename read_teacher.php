@@ -6,7 +6,7 @@ $id=$_POST['selector'];
 $N = count($id);
 for($i=0; $i < $N; $i++)
 {
-	mysql_query("insert into notification_read_teacher (teacher_id,student_read,notification_id) values('$session_id','yes','$id[$i]')")or die(mysql_error());	
+	fetchData($con,"insert into notification_read_teacher (teacher_id,student_read,notification_id) values('$session_id','yes','$id[$i]')");	
 }
 ?>
 <script>

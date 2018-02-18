@@ -9,13 +9,13 @@
                 <div class="span9" id="content">
                      <div class="row-fluid">
 					     <!-- breadcrumb -->
-					<?php $query = mysql_query("select * from teacher_class_student
+					<?php $query = fetchData($con,"select * from teacher_class_student
 					LEFT JOIN teacher_class ON teacher_class.teacher_class_id = teacher_class_student.teacher_class_id 
 					JOIN class ON class.class_id = teacher_class.class_id 
 					JOIN subject ON subject.subject_id = teacher_class.subject_id
 					where student_id = '$session_id'
-					")or die(mysql_error());
-					$row = mysql_fetch_array($query);
+					");
+					$row = mysqli_fetch_array($query);
 					$id = $row['teacher_class_student_id'];	
 					?>
 					     <ul class="breadcrumb">
@@ -29,8 +29,8 @@
 						 <!-- breadcrumb -->	
 					     <ul class="breadcrumb">
 								<?php
-								$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-								$school_year_query_row = mysql_fetch_array($school_year_query);
+								$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+								$school_year_query_row = mysqli_fetch_array($school_year_query);
 								$school_year = $school_year_query_row['school_year'];
 								?>
 								<li><a href="#"><b>Student Profile</b></a><span class="divider">/</span></li>
@@ -48,8 +48,8 @@
   								<div class="alert alert-info"><i class="icon-user"></i>  Information</div>
 								
 								<?php
-								$query = mysql_query("select * from student where student_id = '$session_id'")or die(mysql_error());
-								$row = mysql_fetch_array($query);
+								$query = fetchData($con,"select * from student where student_id = '$session_id'");
+								$row = mysqli_fetch_array($query);
 								?>								
 										
 								    <form  method="post" id="change_password" class="form-horizontal">

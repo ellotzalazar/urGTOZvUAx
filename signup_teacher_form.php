@@ -6,8 +6,8 @@
 					<select name="department_id" class="input-block-level span12">
 						<option></option>
 						<?php
-						$query = mysql_query("select * from department order by department_name ")or die(mysql_error());
-						while($row = mysql_fetch_array($query)){
+						$query = fetchData($con,"select * from department order by department_name ");
+						while($row = mysqli_fetch_array($query)){
 						?>
 						<option value="<?php echo $row['department_id'] ?>"><?php echo $row['department_name']; ?></option>
 						<?php

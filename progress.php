@@ -10,11 +10,11 @@
                      <div class="row-fluid">
 					    <!-- breadcrumb -->
 				
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										$class_id = $class_row['class_id'];
 										$school_year = $class_row['school_year'];
 										?>

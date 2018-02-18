@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->	
 									<ul class="breadcrumb">
 										<?php
-										$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-										$school_year_query_row = mysql_fetch_array($school_year_query);
+										$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+										$school_year_query_row = mysqli_fetch_array($school_year_query);
 										$school_year = $school_year_query_row['school_year'];
 										?>
 											<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -53,7 +53,7 @@
 										if (isset($_POST['save'])){
 										$quiz_title = $_POST['quiz_title'];
 										$description = $_POST['description'];
-										mysql_query("insert into quiz (quiz_title,quiz_description,date_added,teacher_id) values('$quiz_title','$description',NOW(),'$session_id')")or die(mysql_error());
+										fetchData($con,"insert into quiz (quiz_title,quiz_description,date_added,teacher_id) values('$quiz_title','$description',NOW(),'$session_id')");
 										?>
 										<script>
 										window.location = 'teacher_quiz.php';

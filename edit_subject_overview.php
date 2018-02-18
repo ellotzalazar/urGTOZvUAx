@@ -11,11 +11,11 @@
                      <div class="row-fluid">
 					  <!-- breadcrumb -->
 				
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 				
 					     <ul class="breadcrumb">
@@ -35,8 +35,8 @@
                             <div class="block-content collapse in">
                                 <div class="span12">
 								<?php 
-								$subject_query = mysql_query("select * from class_subject_overview where  class_subject_overview_id  = '$subject_id'")or die(mysql_error());
-								$subject_row = mysql_fetch_array($subject_query);
+								$subject_query = fetchData($con,"select * from class_subject_overview where  class_subject_overview_id  = '$subject_id'");
+								$subject_row = mysqli_fetch_array($subject_query);
 								?>
 														<form class="form-horizontal" method="post">
 																<div class="control-group">
@@ -55,7 +55,7 @@
 										<?php
 										if (isset($_POST['save'])){
 										$content = $_POST['content'];
-										mysql_query("update class_subject_overview set content = '$content' where class_subject_overview_id = '$subject_id'")or die(mysql_error());
+										fetchData($con,"update class_subject_overview set content = '$content' where class_subject_overview_id = '$subject_id'");
 										?>
 										<script>
 											window.location = 'subject_overview.php<?php echo '?id='.$get_id; ?>';

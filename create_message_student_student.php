@@ -26,8 +26,8 @@
                                             <select name="student_id"  class="chzn-select" required>
                                              	<option></option>
 											<?php
-											$query = mysql_query("select * from student order by firstname ASC");
-											while($row = mysql_fetch_array($query)){
+											$query = fetchData($con,"select * from student order by firstname ASC");
+											while($row = mysqli_fetch_array($query)){
 											
 											?>
 											<option value="<?php echo $row['student_id']; ?>"><?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?> </option>

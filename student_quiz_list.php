@@ -9,11 +9,11 @@
                 <div class="span9" id="content">
                      <div class="row-fluid">
 					    <!-- breadcrumb -->
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										$class_id = $class_row['class_id'];
 										$school_year = $class_row['school_year'];
 										?>
@@ -28,10 +28,10 @@
                         <!-- block -->
                         <div id="block_bg" class="block">
                             <div class="navbar navbar-inner block-header">
-							<?php 		$query = mysql_query("select * FROM class_quiz 
+							<?php 		$query = fetchData($con,"select * FROM class_quiz 
 										LEFT JOIN quiz on class_quiz.quiz_id = quiz.quiz_id
-										where teacher_class_id = '$get_id'  ")or die(mysql_error());
-										$count = mysql_num_rows($query);
+										where teacher_class_id = '$get_id'  ");
+										$count = mysqli_num_rows($query);
 							?>
                                 <div id="" class="muted pull-right"><span class="badge badge-info"><?php echo $count; ?></span></div>
                             </div>
@@ -51,16 +51,16 @@
 										</thead>
 										<tbody>
                               		<?php
-										$query = mysql_query("select * FROM class_quiz 
+										$query = fetchData($con,"select * FROM class_quiz 
 										LEFT JOIN quiz on class_quiz.quiz_id = quiz.quiz_id
-										where teacher_class_id = '$get_id'  order by class_quiz_id DESC ")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+										where teacher_class_id = '$get_id'  order by class_quiz_id DESC ");
+										while($row = mysqli_fetch_array($query)){
 										$id  = $row['class_quiz_id'];
 										$quiz_id  = $row['quiz_id'];
 										$quiz_time  = $row['quiz_time'];
 									
-										$query1 = mysql_query("select * from student_class_quiz where class_quiz_id = '$id' and student_id = '$session_id'")or die(mysql_error());
-										$row1 = mysql_fetch_array($query1);
+										$query1 = fetchData($con,"select * from student_class_quiz where class_quiz_id = '$id' and student_id = '$session_id'");
+										$row1 = mysqli_fetch_array($query1);
 										$grade = $row1['grade'];
 
 									?>                              

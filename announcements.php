@@ -10,11 +10,11 @@
                      <div class="row-fluid">
 					  <!-- breadcrumb -->
 				
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 				
 					     <ul class="breadcrumb">
@@ -41,8 +41,8 @@
 								<?php
 									if (isset($_POST['post'])){
 									$content = $_POST['content'];
-									mysql_query("insert into teacher_class_announcements (teacher_class_id,teacher_id,content,date) values('$get_id','$session_id','$content',NOW())")or die(mysql_error());
-									mysql_query("insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','Add Annoucements',NOW(),'announcements_student.php')")or die(mysql_error());
+									fetchData($con,"insert into teacher_class_announcements (teacher_class_id,teacher_id,content,date) values('$get_id','$session_id','$content',NOW())");
+									fetchData($con,"insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','Add Annoucements',NOW(),'announcements_student.php')");
 									?>
 									<script>
 									window.location = 'announcements.php<?php echo '?id='.$get_id; ?>';

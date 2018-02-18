@@ -5,14 +5,14 @@
 <?php $quiz_id = $_GET['quiz_id']; ?>
 <?php $quiz_time = $_GET['quiz_time']; ?>
 
-<?php $query1 = mysql_query("select * from student_class_quiz where student_id = '$session_id' and class_quiz_id = '$class_quiz_id' ")or die(mysql_error());
-	  $count = mysql_num_rows($query1);
+<?php $query1 = fetchData($con,"select * from student_class_quiz where student_id = '$session_id' and class_quiz_id = '$class_quiz_id' ");
+	  $count = mysqli_num_rows($query1);
 ?>
 
 <?php
 if ($count > 0){
 }else{
- mysql_query("insert into student_class_quiz (class_quiz_id,student_id,student_quiz_time) values('$class_quiz_id','$session_id','$quiz_time')");
+ fetchData($con,"insert into student_class_quiz (class_quiz_id,student_id,student_quiz_time) values('$class_quiz_id','$session_id','$quiz_time')");
 }
  ?>
 
@@ -25,11 +25,11 @@ if ($count > 0){
                 <div class="span9" id="content">
                      <div class="row-fluid">
 					    <!-- breadcrumb -->
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										$class_id = $class_row['class_id'];
 										$school_year = $class_row['school_year'];
 										?>
@@ -49,8 +49,8 @@ if ($count > 0){
 							<?php
 if($_GET['test'] == 'ok'){
 /* $sqlp = mysql_query("SELECT * FROM groupcode WHERE course_code = '".$row['course_code']."'"); */
-$sqlp = mysql_query("SELECT * FROM class_quiz WHERE class_quiz_id = '$class_quiz_id'")or die(mysql_error());
-$rowp = mysql_fetch_array($sqlp);
+$sqlp = fetchData($con,"SELECT * FROM class_quiz WHERE class_quiz_id = '$class_quiz_id'");
+$rowp = mysqli_fetch_array($sqlp);
 /* mysql_query("UPDATE students SET `time-left` = ".$rowp['time']." WHERE stud_id = '".$_SESSION['user_id']."'"); */
 /* echo $rowp['time']; */
 $x=0;
@@ -74,12 +74,12 @@ $x=0;
 										</script>
 <form action="take_test.php<?php echo '?id='.$get_id; ?>&<?php echo 'class_quiz_id='.$class_quiz_id; ?>&<?php echo 'test=done' ?>&<?php echo 'quiz_id='.$quiz_id; ?>&<?php echo 'quiz_time='.$quiz_time; ?>" name="testform" method="POST" id="test-form">
 <?php
-										$sqla = mysql_query("select * FROM class_quiz 
+										$sqla = fetchData($con,"select * FROM class_quiz 
 										LEFT JOIN quiz ON quiz.quiz_id  = class_quiz.quiz_id
 										where teacher_class_id = '$get_id' 
-										order by date_added DESC ")or die(mysql_error());
+										order by date_added DESC ");
 										/* $row = mysql_fetch_array($sqla); */
-										$rowa = mysql_fetch_array($sqla);
+										$rowa = mysqli_fetch_array($sqla);
 					
 										/* $rowa   = $row['quiz_id']; */
 /* $sqla = mysql_query("SELECT * FROM class_quiz WHERE course_code = '".$row['course_code']."'"); */
@@ -116,9 +116,9 @@ $x=0;
 <th>Question</th>
 </tr>
 <?php
-	$sqlw = mysql_query("SELECT * FROM quiz_question where quiz_id = '$quiz_id'  ORDER BY RAND()");
-	$qt = mysql_num_rows($sqlw); 
-	while($roww = mysql_fetch_array($sqlw)){
+	$sqlw = fetchData($con,"SELECT * FROM quiz_question where quiz_id = '$quiz_id'  ORDER BY RAND()");
+	$qt = mysqli_num_rows($sqlw); 
+	while($roww = mysqli_fetch_array($sqlw)){
 ?>
 <tr id="q_<?php echo $x=$x+1;?>" class="questions">
 <td width="30" id="qa"><?php echo $x;?></td>
@@ -132,8 +132,8 @@ if($roww['question_type_id']=='2'){
 	<input name="q-<?php echo $roww['quiz_question_id'];?>" value="True" type="radio"> True&nbsp;|&nbsp;<input name="q-<?php echo $roww['quiz_question_id'];?>" value="False" type="radio"> False
 <?php
 } else if($roww['question_type_id']=='1') {
-	$sqly = mysql_query("SELECT * FROM answer WHERE quiz_question_id = '".$roww['quiz_question_id']."'");
-	while($rowy = mysql_fetch_array($sqly)){
+	$sqly = fetchData($con,"SELECT * FROM answer WHERE quiz_question_id = '".$roww['quiz_question_id']."'");
+	while($rowy = mysqli_fetch_array($sqly)){
 	if($rowy['choices'] == 'A') {
 	?>
 	A.)<input name="q-<?php echo $roww['quiz_question_id'];?>" value="A" type="radio"> <?php echo $rowy['answer_text'];?><br /><br />
@@ -175,8 +175,8 @@ if($roww['question_type_id']=='2'){
 		$x2 = $_POST["x-$x"];
 		$q = $_POST["q-$x2"];
 		
-		$sql = mysql_query("SELECT * FROM quiz_question WHERE quiz_question_id = ".$x2."");
-		$row = mysql_fetch_array($sql);
+		$sql = fetchData($con,"SELECT * FROM quiz_question WHERE quiz_question_id = ".$x2."");
+		$row = mysqli_fetch_array($sql);
 		if($row['answer'] == $q) {
 			$score= $score + 1;
 		}
@@ -188,7 +188,7 @@ if($roww['question_type_id']=='2'){
 	</center>
 	<?php
 	/* echo "Your Percentage Grade is : <b>".$per."%</b>"; */
-	mysql_query("UPDATE student_class_quiz SET `student_quiz_time` = 3600, `grade` = '".$score." out of ".($x-1)."' WHERE student_id = '$session_id' and class_quiz_id = '$class_quiz_id'")or die(mysql_error());
+	fetchData($con,"UPDATE student_class_quiz SET `student_quiz_time` = 3600, `grade` = '".$score." out of ".($x-1)."' WHERE student_id = '$session_id' and class_quiz_id = '$class_quiz_id'");
 ?>
 <script>
 	  window.location = 'student_quiz_list.php<?php echo '?id='.$get_id; ?>'; 

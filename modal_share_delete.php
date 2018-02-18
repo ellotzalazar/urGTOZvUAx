@@ -14,11 +14,11 @@
                                           <div class="controls">
                                             <select name="teacher_class_id"  class="" required>
                                              	<option></option>
-																		<?php $query = mysql_query("select * from teacher_class
+																		<?php $query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_id = '$session_id' and school_year = '$school_year' ")or die(mysql_error());	
-										while($row = mysql_fetch_array($query)){
+										where teacher_id = '$session_id' and school_year = '$school_year' ");	
+										while($row = mysqli_fetch_array($query)){
 										$id = $row['teacher_class_id'];
 										?>		
 									

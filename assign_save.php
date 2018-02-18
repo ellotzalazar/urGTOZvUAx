@@ -29,8 +29,8 @@ if ($input_name == ""){
 
 			$name_notification  = 'Add Assignment file name'." ".'<b>'.$name.'</b>';
 	   
-                mysql_query("INSERT INTO assignment (fdesc,fdatein,teacher_id,class_id,fname) VALUES ('$filedesc',NOW(),'$session_id','$id_class','$name')")or die(mysql_error());
-				 mysql_query("insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','$name_notification',NOW(),'assignment_student.php')")or die(mysql_error());               
+               fetchData($con,"INSERT INTO assignment (fdesc,fdatein,teacher_id,class_id,fname) VALUES ('$filedesc',NOW(),'$session_id','$id_class','$name')");
+				 fetchData($con("insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','$name_notification',NOW(),'assignment_student.php')");              
 ?>            
 			<script>
 				window.location = 'assignment.php<?php echo '?id='.$get_id;  ?>';
@@ -57,7 +57,7 @@ if ($input_name == ""){
                 //successful upload
                 // echo "It's done! The file has been saved as: ".$newname;		   
                 $qry2 = "INSERT INTO assignment (fdesc,floc,fdatein,teacher_id,class_id,fname) VALUES ('$filedesc','$newname',NOW(),'$session_id','$id_class','$name')";
-				$query = mysql_query("insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','$name_notification',NOW(),'assignment_student.php')")or die(mysql_error());               
+				$query = fetchData($con,"insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','$name_notification',NOW(),'assignment_student.php')");               
 			   //$result = @mysql_query($qry);
                 $result2 = $connector->query($qry2);
                 if ($result2) {

@@ -24,11 +24,11 @@
 					   
 					   <!-- breadcrumb -->
 				
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 				
 					     <ul class="breadcrumb">
@@ -48,8 +48,8 @@
                             <div class="block-content collapse in">
                                 <div class="span12">
 									<?php
-										$query1 = mysql_query("select * FROM assignment where assignment_id = '$post_id'")or die(mysql_error());
-										$row1 = mysql_fetch_array($query1);
+										$query1 = fetchData($con,"select * FROM assignment where assignment_id = '$post_id'");
+										$row1 = mysqli_fetch_array($query1);
 									
 									?>
 									<div class="alert alert-info">Submit Assignment in : <?php echo $row1['fname']; ?></div>
@@ -73,10 +73,10 @@
 										<tbody>
 											
                               		<?php
-										$query = mysql_query("select * FROM student_assignment 
+										$query = fetchData($con,"select * FROM student_assignment 
 										LEFT JOIN student on student.student_id  = student_assignment.student_id
-										where assignment_id = '$post_id'  order by assignment_fdatein DESC")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+										where assignment_id = '$post_id'  order by assignment_fdatein DESC");
+										while($row = mysqli_fetch_array($query)){
 										$id  = $row['student_assignment_id'];
 									?>                              
 										<tr>

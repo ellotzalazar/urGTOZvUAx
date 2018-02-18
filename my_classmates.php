@@ -9,13 +9,13 @@
                 <div class="span9" id="content">
                      <div class="row-fluid">
 					     <!-- breadcrumb -->
-					<?php $query = mysql_query("select * from teacher_class_student
+					<?php $query = fetchData($con,"select * from teacher_class_student
 					LEFT JOIN teacher_class ON teacher_class.teacher_class_id = teacher_class_student.teacher_class_id 
 					JOIN class ON class.class_id = teacher_class.class_id 
 					JOIN subject ON subject.subject_id = teacher_class.subject_id
 					where student_id = '$session_id'
-					")or die(mysql_error());
-					$row = mysql_fetch_array($query);
+					");
+					$row = mysqli_fetch_array($query);
 					$id = $row['teacher_class_student_id'];	
 					?>
 					     <ul class="breadcrumb">
@@ -39,12 +39,12 @@
 										    		<?php
 										 
 										 
-														$my_student = mysql_query("SELECT *
+														$my_student = fetchData($con,"SELECT *
 														FROM teacher_class_student
 														LEFT JOIN student ON student.student_id = teacher_class_student.student_id
-														INNER JOIN class ON class.class_id = student.class_id where teacher_class_id = '$get_id' order by lastname ")or die(mysql_error());
+														INNER JOIN class ON class.class_id = student.class_id where teacher_class_id = '$get_id' order by lastname ");
 														
-														while($row = mysql_fetch_array($my_student)){
+														while($row = mysqli_fetch_array($my_student)){
 														$id = $row['teacher_class_student_id'];
 													?>
 														

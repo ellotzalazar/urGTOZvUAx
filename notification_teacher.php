@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->
 					     <ul class="breadcrumb">
 						<?php
-						$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-						$school_year_query_row = mysql_fetch_array($school_year_query);
+						$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+						$school_year_query_row = mysqli_fetch_array($school_year_query);
 						$school_year = $school_year_query_row['school_year'];
 						?>
 							<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -36,23 +36,23 @@
 						
 								<?php  }  ?>
 				
-					<?php $query = mysql_query("select * from teacher_notification
+					<?php $query = fetchData($con,"select * from teacher_notification
 					LEFT JOIN teacher_class on teacher_class.teacher_class_id = teacher_notification.teacher_class_id
 					LEFT JOIN student on student.student_id = teacher_notification.student_id
 					LEFT JOIN assignment on assignment.assignment_id = teacher_notification.assignment_id 
 					LEFT JOIN class on teacher_class.class_id = class.class_id
 					LEFT JOIN subject on teacher_class.subject_id = subject.subject_id
 					where teacher_class.teacher_id = '$session_id'  order by  teacher_notification.date_of_notification DESC
-					")or die(mysql_error());
-					$count = mysql_num_rows($query);
-					while($row = mysql_fetch_array($query)){
+					");
+					$count = mysqli_num_rows($query);
+					while($row = mysqli_fetch_array($query)){
 					$assignment_id = $row['assignment_id'];
 					$get_id = $row['teacher_class_id'];
 					$id = $row['teacher_notification_id'];
 					
 					
-					$query_yes_read = mysql_query("select * from notification_read_teacher where notification_id = '$id' and teacher_id = '$session_id'")or die(mysql_error());
-					$read_row = mysql_fetch_array($query_yes_read);
+					$query_yes_read = fetchData($con,"select * from notification_read_teacher where notification_id = '$id' and teacher_id = '$session_id'");
+					$read_row = mysqli_fetch_array($query_yes_read);
 					
 					$yes = $read_row['student_read']; 
 				
@@ -98,8 +98,8 @@
 										<tbody>
 											
                              
-									<?php $event_query = mysql_query("select * from event  ")or die(mysql_error());
-										while($event_row = mysql_fetch_array($event_query)){
+									<?php $event_query = fetchData($con,"select * from event  ");
+										while($event_row = mysqli_fetch_array($event_query)){
 										$id  = $event_row['event_id'];
 									?>                              
 										<tr id="del<?php echo $id; ?>">

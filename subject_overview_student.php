@@ -10,11 +10,11 @@
                      <div class="row-fluid">
 					  <!-- breadcrumb -->
 				
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 				
 					     <ul class="breadcrumb">
@@ -32,13 +32,13 @@
                             <div class="block-content collapse in">
                                 <div class="span12">
 								
-  											<?php $query = mysql_query("select * from teacher_class
+  											<?php $query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
 										LEFT JOIN teacher ON teacher.teacher_id = teacher_class.teacher_id
 										
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$row = mysql_fetch_array($query);
+										where teacher_class_id = '$get_id'");
+										$row = mysqli_fetch_array($query);
 										$id = $row['teacher_class_id'];
 				
 										?>
@@ -49,10 +49,10 @@
 															<img id="avatar" class="img-polaroid" src="admin/<?php echo $row['location']; ?>" width>
 															<p><a href=""><i class="icon-search"></i> view info</a></p>
 															<hr>
-										<?php $query = mysql_query("select * from teacher_class
+										<?php $query = fetchData($con,"select * from teacher_class
 											LEFT JOIN class_subject_overview ON class_subject_overview.teacher_class_id = teacher_class.teacher_class_id
-											where class_subject_overview.teacher_class_id = '$get_id'")or die(mysql_error());
-											$row_subject = mysql_fetch_array($query); ?>
+											where class_subject_overview.teacher_class_id = '$get_id'");
+											$row_subject = mysqli_fetch_array($query); ?>
 										<?php echo $row_subject['content']; ?>
                                 </div>
                             </div>

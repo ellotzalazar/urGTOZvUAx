@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->	
 									<ul class="breadcrumb">
 										<?php
-										$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-										$school_year_query_row = mysql_fetch_array($school_year_query);
+										$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+										$school_year_query_row = mysqli_fetch_array($school_year_query);
 										$school_year = $school_year_query_row['school_year'];
 										?>
 											<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -36,8 +36,8 @@
 											<div class="controls">
 											<select name="quiz_id">
 											<option></option>
-												<?php  $query = mysql_query("select * from quiz where teacher_id = '$session_id'")or die(mysql_error());
-												while ($row = mysql_fetch_array($query)){ $id = $row['quiz_id']; ?>
+												<?php  $query = fetchData($con,"select * from quiz where teacher_id = '$session_id'");
+												while ($row = mysqli_fetch_array($query)){ $id = $row['quiz_id']; ?>
 												<option value="<?php echo $id; ?>"><?php echo $row['quiz_title']; ?></option>
 												<?php } ?>
 											</select>
@@ -57,14 +57,14 @@
                 <th></th>
 				
 				<tbody>
-					<?php $query = mysql_query("select * from teacher_class
+					<?php $query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_id = '$session_id' and school_year = '$school_year' ")or die(mysql_error());
-										$count = mysql_num_rows($query);
+										where teacher_id = '$session_id' and school_year = '$school_year' ");
+										$count = mysqli_num_rows($query);
 										
 
-										while($row = mysql_fetch_array($query)){
+										while($row = mysqli_fetch_array($query)){
 										$id = $row['teacher_class_id'];
 				
 										?>
@@ -101,8 +101,8 @@
 											$N = count($id);
 											for($i=0; $i < $N; $i++)
 											{
-												mysql_query("insert into class_quiz (teacher_class_id,quiz_time,quiz_id) values('$id[$i]','$time','$quiz_id')")or die(mysql_error());
-												mysql_query("insert into notification (teacher_class_id,notification,date_of_notification,link) value('$id[$i]','$name_notification',NOW(),'student_quiz_list.php')")or die(mysql_error());
+												fetchData($con,"insert into class_quiz (teacher_class_id,quiz_time,quiz_id) values('$id[$i]','$time','$quiz_id')");
+												fetchData($con,"insert into notification (teacher_class_id,notification,date_of_notification,link) value('$id[$i]','$name_notification',NOW(),'student_quiz_list.php')");
 											} ?>
 											<script>
 												window.location = 'teacher_quiz.php';

@@ -10,8 +10,8 @@
 					    <!-- breadcrumb -->	
 									<ul class="breadcrumb">
 										<?php
-										$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-										$school_year_query_row = mysql_fetch_array($school_year_query);
+										$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+										$school_year_query_row = mysqli_fetch_array($school_year_query);
 										$school_year = $school_year_query_row['school_year'];
 										?>
 											<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -47,8 +47,8 @@
 										</thead>
 										<tbody>
                               		<?php
-										$query = mysql_query("select * FROM quiz where teacher_id = '$session_id'  order by date_added DESC ")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+										$query = fetchData($con,"select * FROM quiz where teacher_id = '$session_id'  order by date_added DESC ");
+										while($row = mysqli_fetch_array($query)){
 										$id  = $row['quiz_id'];
 									?>                              
 										<tr id="del<?php echo $id; ?>">

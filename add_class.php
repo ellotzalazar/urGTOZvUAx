@@ -13,8 +13,8 @@
                                             <select name="class_id"  class="" required>
                                              	<option></option>
 											<?php
-											$query = mysql_query("select * from class order by class_name");
-											while($row = mysql_fetch_array($query)){
+											$query = fetchData($con,"select * from class order by class_name");
+											while($row = mysqli_fetch_array($query)){
 											
 											?>
 											<option value="<?php echo $row['class_id']; ?>"><?php echo $row['class_name']; ?></option>
@@ -29,8 +29,8 @@
                                             <select name="subject_id"  class="" required>
                                              	<option></option>
 											<?php
-											$query = mysql_query("select * from subject order by subject_code");
-											while($row = mysql_fetch_array($query)){
+											$query = fetchData($con,"select * from subject order by subject_code");
+											while($row = mysqli_fetch_array($query)){
 											
 											?>
 											<option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_code']; ?></option>
@@ -43,8 +43,8 @@
 											<label>School Year:</label>
                                           <div class="controls">
 											<?php
-											$query = mysql_query("select * from school_year order by school_year DESC");
-											$row = mysql_fetch_array($query);
+											$query = fetchData($con,"select * from school_year order by school_year DESC");
+											$row = mysqli_fetch_array($query);
 											?>
 											<input id="" class="span5" type="text" class="" name="school_year" value="<?php  echo $row['school_year']; ?>" >
                                           </div>

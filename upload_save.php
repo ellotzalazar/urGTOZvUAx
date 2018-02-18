@@ -7,8 +7,8 @@ $errmsg_arr = array();
 //Validation error flag
 $errflag = false;
 
-$uploaded_by_query = mysql_query("select * from teacher where teacher_id = '$session_id'")or die(mysql_error());
-$uploaded_by_query_row = mysql_fetch_array($uploaded_by_query);
+$uploaded_by_query = fetchData($con,"select * from teacher where teacher_id = '$session_id'");
+$uploaded_by_query_row = mysqli_fetch_array($uploaded_by_query);
 $uploaded_by = $uploaded_by_query_row['firstname']."".$uploaded_by_query_row['lastname'];
 
 $id_class=$_POST['id_class'];
@@ -16,16 +16,16 @@ $name=$_POST['name'];
 
 
 //Function to sanitize values received from the form. Prevents SQL injection
-function clean($str) {
+function clean($con,$str) {
     $str = @trim($str);
     if (get_magic_quotes_gpc()) {
         $str = stripslashes($str);
     }
-    return mysql_real_escape_string($str);
+    return mysqli_real_escape_string($con,$str);
 }
 
 //Sanitize the POST values
-$filedesc = clean($_POST['desc']);
+$filedesc = clean($con,$_POST['desc']);
 //$subject= clean($_POST['upname']);
 
 if ($filedesc == '') {
@@ -72,7 +72,7 @@ if ((!empty($_FILES["uploaded_file"])) && ($_FILES['uploaded_file']['error'] == 
                 //successful upload
                 // echo "It's done! The file has been saved as: ".$newname;		   
                 $qry2 = "INSERT INTO files (fdesc,floc,fdatein,teacher_id,class_id,fname,uploaded_by) VALUES ('$filedesc','$newname',NOW(),'$session_id','$id_class','$name','$uploaded_by')";
-				mysql_query("insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','$name_notification',NOW(),'downloadable_student.php')")or die(mysql_error());
+				fetchData($con,"insert into notification (teacher_class_id,notification,date_of_notification,link) value('$get_id','$name_notification',NOW(),'downloadable_student.php')");
 			   //$result = @mysql_query($qry);
                 $result2 = $connector->query($qry2);
                 if ($result2) {
@@ -169,7 +169,7 @@ if ((!empty($_FILES["uploaded_file"])) && ($_FILES['uploaded_file']['error'] == 
 }
 
 
-mysql_close();
+mysqli_close($con);
 ?>
 
 

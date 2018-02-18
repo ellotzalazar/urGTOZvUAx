@@ -10,11 +10,11 @@
                      <div class="row-fluid">
 					  <!-- breadcrumb -->
 				
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 				
 					     <ul class="breadcrumb">
@@ -32,12 +32,12 @@
                             <div class="block-content collapse in">
                                 <div class="span12">
 								 <?php
-								 $query_announcement = mysql_query("select * from teacher_class_announcements
+								 $query_announcement = fetchData($con,"select * from teacher_class_announcements
 																	where  teacher_class_id = '$get_id' order by date DESC
-																	")or die(mysql_error());
-								$count = mysql_num_rows($query_announcement);
+																	");
+								$count = mysqli_num_rows($query_announcement);
 								if ($count > 0){
-								 while($row = mysql_fetch_array($query_announcement)){
+								 while($row = mysqli_fetch_array($query_announcement)){
 								 $id = $row['teacher_class_announcements_id'];
 								 ?>
 											<div class="post"  id="del<?php echo $id; ?>">

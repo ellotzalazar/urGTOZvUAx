@@ -12,8 +12,8 @@
                                             <select name="school_year"  class="span8" required>
                                              	<option></option>
 											<?php
-											$query = mysql_query("select * from school_year order by school_year DESC");
-											while($row = mysql_fetch_array($query)){
+											$query = fetchData($con,"select * from school_year order by school_year DESC");
+											while($row = mysqli_fetch_array($query)){
 											
 											?>
 											<option><?php echo $row['school_year']; ?></option>

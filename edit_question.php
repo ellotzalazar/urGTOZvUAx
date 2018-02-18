@@ -12,8 +12,8 @@
 					    <!-- breadcrumb -->	
 									<ul class="breadcrumb">
 										<?php
-										$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-										$school_year_query_row = mysql_fetch_array($school_year_query);
+										$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+										$school_year_query_row = mysqli_fetch_array($school_year_query);
 										$school_year = $school_year_query_row['school_year'];
 										?>
 										<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -31,10 +31,10 @@
                             <div class="block-content collapse in">
                                 <div class="span12">
 								<?php
-										$query = mysql_query("select * FROM quiz_question
+										$query = fetchData($con,"select * FROM quiz_question
 										LEFT JOIN question_type on quiz_question.question_type_id = question_type.question_type_id
-										where quiz_id = '$get_id' and quiz_question_id = '$quiz_question_id'  order by date_added DESC ")or die(mysql_error());
-										$row = mysql_fetch_array($query);
+										where quiz_id = '$get_id' and quiz_question_id = '$quiz_question_id'  order by date_added DESC ");
+										$row = mysqli_fetch_array($query);
 								?>
 								
 							    <form class="form-horizontal" method="post">
@@ -58,8 +58,8 @@
 
 														<option value="<?php echo $row['question_type_id']; ?>" ><?php echo $row['question_type']; ?></option>
 													<?php
-													$query_question = mysql_query("select * from question_type")or die(mysql_error());
-													while($query_question_row = mysql_fetch_array($query_question)){
+													$query_question = fetchData($con,"select * from question_type");
+													while($query_question_row = mysqli_fetch_array($query_question)){
 													?>
 													<option value="<?php echo $query_question_row['question_type_id']; ?>"><?php echo $query_question_row['question_type'];  ?></option>
 													<?php } ?>
@@ -72,8 +72,8 @@
 											<div class="controls">			
 										<div id="opt11">
 <?php
-	$sqlz = mysql_query("SELECT * FROM answers WHERE q_id = ".$_GET['edit']."");
-	while($rowz = mysql_fetch_array($sqlz)){
+	$sqlz = fetchData($con,"SELECT * FROM answers WHERE q_id = ".$_GET['edit']."");
+	while($rowz = mysqli_fetch_array($sqlz)){
 		if($rowz['choice'] == 'A'){
 			$a = $rowz['value'];
 		} else if($rowz['choice'] == 'B'){
@@ -123,20 +123,20 @@
 		$ans4 = $_POST['ans4'];
 		
 		if ($type  == '2'){
-				mysql_query("insert into quiz_question (quiz_id,question_text,date_added,answer,question_type_id) 
-			values('$get_id','$question',NOW(),'".$_POST['correctt']."','$type')")or die(mysql_error());
+				fetchData($con,"insert into quiz_question (quiz_id,question_text,date_added,answer,question_type_id) 
+			values('$get_id','$question',NOW(),'".$_POST['correctt']."','$type')");
 		}else{
 	
-		mysql_query("insert into quiz_question (quiz_id,question_text,date_added,answer,question_type_id) 
-		values('$get_id','$question',NOW(),'$answer','$type')")or die(mysql_error());
-		$query = mysql_query("select * from quiz_question order by quiz_question_id DESC LIMIT 1")or die(mysql_error());
-		$row = mysql_fetch_array($query);
+		fetchData($con,"insert into quiz_question (quiz_id,question_text,date_added,answer,question_type_id) 
+		values('$get_id','$question',NOW(),'$answer','$type')");
+		$query = fetchData($con,"select * from quiz_question order by quiz_question_id DESC LIMIT 1");
+		$row = mysqli_fetch_array($query);
 		$quiz_question_id = $row['quiz_question_id'];
 		
-		mysql_query("insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans1','A')")or die(mysql_error());
-		mysql_query("insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans2','B')")or die(mysql_error());
-		mysql_query("insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans3','C')")or die(mysql_error());
-		mysql_query("insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans4','D')")or die(mysql_error());
+		fetchData($con,"insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans1','A')");
+		fetchData($con,"insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans2','B')");
+		fetchData($con,"insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans3','C')");
+		fetchData($con,"insert into answer (quiz_question_id,answer_text,choices) values('$quiz_question_id','$ans4','D')");
 		
 		}
 		

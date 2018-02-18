@@ -11,8 +11,8 @@
 					    <!-- breadcrumb -->	
 									<ul class="breadcrumb">
 										<?php
-										$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-										$school_year_query_row = mysql_fetch_array($school_year_query);
+										$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+										$school_year_query_row = mysqli_fetch_array($school_year_query);
 										$school_year = $school_year_query_row['school_year'];
 										?>
 											<li><a href="#"><b>My Class</b></a><span class="divider">/</span></li>
@@ -31,8 +31,8 @@
 									<a href="teacher_quiz.php" class="btn btn-info"><i class="icon-arrow-left"></i> Back</a>
 									</div>
 								<?php
-								$query = mysql_query("select * from quiz where quiz_id = '$get_id'")or die(mysql_error());
-								$row  = mysql_fetch_array($query);
+								$query = fetchData($con,"select * from quiz where quiz_id = '$get_id'");
+								$row  = mysqli_fetch_array($query);
 								
 								?>
 									    <form class="form-horizontal" method="post">
@@ -60,7 +60,7 @@
 										$quiz_id = $_POST['quiz_id'];
 										$quiz_title = $_POST['quiz_title'];
 										$description = $_POST['description'];
-										mysql_query("update quiz set quiz_title = '$quiz_title',quiz_description = '$description' where quiz_id = '$quiz_id'")or die(mysql_error());
+										fetchData($con,"update quiz set quiz_title = '$quiz_title',quiz_description = '$description' where quiz_id = '$quiz_id'");
 										?>
 										<script>
 										window.location = 'teacher_quiz.php';

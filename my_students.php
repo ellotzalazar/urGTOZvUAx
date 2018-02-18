@@ -18,10 +18,10 @@
                             <div class="navbar navbar-inner block-header">
                                 <div id="" class="muted pull-right">
 								<?php 
-								$my_student = mysql_query("SELECT * FROM teacher_class_student
+								$my_student = fetchData($con,"SELECT * FROM teacher_class_student
 														LEFT JOIN student ON student.student_id = teacher_class_student.student_id 
-														INNER JOIN class ON class.class_id = student.class_id where teacher_class_id = '$get_id' order by lastname ")or die(mysql_error());
-								$count_my_student = mysql_num_rows($my_student);?>
+														INNER JOIN class ON class.class_id = student.class_id where teacher_class_id = '$get_id' order by lastname ");
+								$count_my_student = mysqli_num_rows($my_student);?>
 								Number of Students: <span class="badge badge-info"><?php echo $count_my_student; ?></span>
 								</div>
                             </div>
@@ -29,10 +29,10 @@
                                 <div class="span12">
 									<ul	 id="da-thumbs" class="da-thumbs">
 										    <?php
-														$my_student = mysql_query("SELECT * FROM teacher_class_student
+														$my_student = fetchData($con,"SELECT * FROM teacher_class_student
 														LEFT JOIN student ON student.student_id = teacher_class_student.student_id 
-														INNER JOIN class ON class.class_id = student.class_id where teacher_class_id = '$get_id' order by lastname ")or die(mysql_error());
-														while($row = mysql_fetch_array($my_student)){
+														INNER JOIN class ON class.class_id = student.class_id where teacher_class_id = '$get_id' order by lastname ");
+														while($row = mysqli_fetch_array($my_student)){
 														$id = $row['teacher_class_student_id'];
 														?>
 											<li id="del<?php echo $id; ?>">

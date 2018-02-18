@@ -12,8 +12,8 @@
 									
 					     <ul class="breadcrumb">
 						<?php
-						$school_year_query = mysql_query("select * from school_year order by school_year DESC")or die(mysql_error());
-						$school_year_query_row = mysql_fetch_array($school_year_query);
+						$school_year_query = fetchData($con,"select * from school_year order by school_year DESC");
+						$school_year_query_row = mysqli_fetch_array($school_year_query);
 						$school_year = $school_year_query_row['school_year'];
 						?>
 							<li><a href="#">Teachers</a><span class="divider">/</span></li>
@@ -31,14 +31,14 @@
                                 <div class="span12">
   								<div class="alert alert-info"><i class="icon-user"></i> Your Information</div>
 								<?php
-								$query = mysql_query("select * from student where student_id = '$session_id'")or die(mysql_error());
-								$row = mysql_fetch_array($query);
+								$query = fetchData($con,"select * from student where student_id = '$session_id'");
+								$row = mysqli_fetch_array($query);
 								?>								
 										
 								    <form  method="post" id="change_password" class="form-horizontal">
 
-								    	<?php $query= mysql_query("select * from teacher where teacher_id = '$session_id'")or die(mysql_error());
-										$row = mysql_fetch_array($query);
+								    	<?php $query= fetchData($con,"select * from teacher where teacher_id = '$session_id'");
+										$row = mysqli_fetch_array($query);
 										?>
 
 								    	<div class="control-group">

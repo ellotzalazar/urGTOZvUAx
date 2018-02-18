@@ -14,8 +14,8 @@
                                             <select name="school_year"  class="">
                                             <option></option>
 											<?php
-											$query1 = mysql_query("select * from teacher_class where class_id ='$class_id' and school_year != '$school_year'")or die(mysql_error());
-											while($row = mysql_fetch_array($query1)){
+											$query1 = fetchData($con,"select * from teacher_class where class_id ='$class_id' and school_year != '$school_year'");
+											while($row = mysqli_fetch_array($query1)){
 											
 											?>
 											<option><?php echo $row['school_year']; ?></option>
@@ -58,8 +58,8 @@
                                             <select name="teacher_id1"  class="" required>
                                              	<option></option>
 											<?php
-											$query = mysql_query("select * from teacher order by firstname");
-											while($row = mysql_fetch_array($query)){
+											$query = fetchData($con,"select * from teacher order by firstname");
+											while($row = mysqli_fetch_array($query)){
 											
 											?>
 											

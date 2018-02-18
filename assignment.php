@@ -9,11 +9,11 @@
                 <div class="span6" id="content">
                      <div class="row-fluid">
 					   <!-- breadcrumb -->
-										<?php $class_query = mysql_query("select * from teacher_class
+										<?php $class_query = fetchData($con,"select * from teacher_class
 										LEFT JOIN class ON class.class_id = teacher_class.class_id
 										LEFT JOIN subject ON subject.subject_id = teacher_class.subject_id
-										where teacher_class_id = '$get_id'")or die(mysql_error());
-										$class_row = mysql_fetch_array($class_query);
+										where teacher_class_id = '$get_id'");
+										$class_row = mysqli_fetch_array($class_query);
 										?>
 					     <ul class="breadcrumb">
 							<li><a href="#"><?php echo $class_row['class_name']; ?></a> <span class="divider">/</span></li>
@@ -41,8 +41,8 @@
 										<tbody>
 											
                               		<?php
-										$query = mysql_query("select * FROM assignment where class_id = '$get_id' and teacher_id = '$session_id' order by fdatein DESC ")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+										$query = fetchData($con,"select * FROM assignment where class_id = '$get_id' and teacher_id = '$session_id' order by fdatein DESC ");
+										while($row = mysqli_fetch_array($query)){
 										$id  = $row['assignment_id'];
 										$floc  = $row['floc'];
 									?>                              
