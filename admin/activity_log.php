@@ -32,7 +32,7 @@
                                   $query = "select * from activity_log";
                                   $data = fetchData($con, $query);
 
-										while($row = $data->mysqli_fetch_row()){
+										while($row = mysqli_fetch_array($data)){
 									?>
 							
 
