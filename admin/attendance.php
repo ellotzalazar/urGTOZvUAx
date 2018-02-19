@@ -35,12 +35,12 @@
 									<hr/>
 									<?php $date = isset($_GET['date']) ? date('m/d/Y',strtotime($_GET['date'])) : date('m/d/Y')?>
 									<label>
-										Attendance List for :<?=$date?>
+										Attendance For : <?=$date?>
 										<a type="btn btn-success"><i class="icon-calendar"></i></a>
 										<input type="text" name="date" class="date-filter datepicker" value="<?=$date?>"> 
 									</label>
 									
-									<table class="table table-bordered table-striped table-condensed">
+									<table class="table table-bordered table-striped table-condensed dataTable" id="example">
 										<thead>
 											<tr>
 												<th>[ID] Name</th>
