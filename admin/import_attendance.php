@@ -41,26 +41,38 @@
 							$type = 'student';
 						}
 					}
+					
 					if($k == 1)
 					{
-						$trans_date = date('Y-m-d',strtotime($e[1]));
+						$olddate = $e[1];
+						$trans_date = '20'.substr($olddate,6,2). "-". substr($olddate,0,2) . "-" . substr($olddate,3,2);
 					}
-						
+					
 					if($e[0] != '' && $k > 4)
 					{
+						if($type == 'teacher')
+						{
+							$select_query = "SELECT * FROM teacher WHERE username = '".$e[0]."';";
+							$info = fetchData($con,$select_query);
+							$teacher_info = $info->fetch_array();
+							$id = $teacher_info['teacher_id'];
+						}
+						else
+						{
+							$select_query = "SELECT * FROM student WHERE username = '".$e[0]."';";
+							$info = fetchData($con,$select_query);
+							$student_info = $info->fetch_array();
+							$id = $student_info['student_id'];
+						}
 						
-						$select_query = "SELECT * FROM teacher WHERE username = '".$e[0]."';";
-						$info = fetchData($con,$select_query);
-						$teacher_info = $info->fetch_array();
 						if($info->num_rows > 0)
 						{
-							$check = fetchData($con,"SELECT * FROM attendance WHERE reference_id = {$teacher_info['teacher_id']} AND type = '$type' AND transaction_date = '$trans_date'");
+							$check = fetchData($con,"SELECT * FROM attendance WHERE reference_id = {$id} AND type = '$type' AND transaction_date = '$trans_date'");
 							if($check->num_rows == 0)
 							{
 								$query = "INSERT INTO attendance(reference_id,type,transaction_date,time_in,time_out,uploaded_by,created_at)
-											VALUES({$teacher_info['teacher_id']},'$type','$trans_date','{$e[1]}','{$e[2]}',{$session_id},'{$date}');
+											VALUES({$id},'$type','$trans_date','{$e[1]}','{$e[2]}',{$session_id},'{$date}');
 										";
-										
 								executeInsert($con,$query);
 							}
 						}
