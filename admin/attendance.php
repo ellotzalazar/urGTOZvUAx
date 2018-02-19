@@ -33,14 +33,30 @@
 								<div class="clearfix"></div>
 								<div class="span12">
 									<hr/>
-									<?php $date = isset($_GET['date']) ? date('m/d/Y',strtotime($_GET['date'])) : date('m/d/Y')?>
+									<?php 
+										$date = isset($_GET['date']) ? date('m/d/Y',strtotime($_GET['date'])) : date('m/d/Y');
+										$query = "SELECT att.*,
+															(CASE  
+																WHEN att.type = 'teacher'
+																THEN (SELECT CONCAT('<b>[',username,']</b> ',lastname,',',firstname) FROM teacher WHERE teacher_id = att.reference_id)
+															ELSE
+																(SELECT CONCAT('<b>[',username,']</b> ',lastname,',',firstname) FROM student WHERE student_id = att.reference_id)
+															END) name
+																
+																FROM attendance  att
+															
+															WHERE
+																att.transaction_date = '". date('Y-m-d',strtotime($date)) ."'
+														";
+											$data = fetchData($con,$query);
+									?>
 									<label>
 										Attendance For : <?=$date?>
 										<a type="btn btn-success"><i class="icon-calendar"></i></a>
 										<input type="text" name="date" class="date-filter datepicker" value="<?=$date?>"> 
 									</label>
 									
-									<table class="table table-bordered table-striped table-condensed dataTable" id="example">
+									<table class="table table-bordered table-striped table-condensed dataTable" id="<?=$data->num_rows > 0 ? 'example' : ''?>">
 										<thead>
 											<tr>
 												<th>[ID] Name</th>
@@ -51,20 +67,6 @@
 										</thead>
 										<tbody>
 											<?php
-												$query = "SELECT att.*,
-																(CASE  
-																	WHEN att.type = 'teacher'
-																	THEN (SELECT CONCAT('<b>[',username,']</b> ',lastname,',',firstname) FROM teacher WHERE teacher_id = att.reference_id)
-																ELSE
-																	(SELECT CONCAT('<b>[',username,']</b> ',lastname,',',firstname) FROM student WHERE student_id = att.reference_id)
-																END) name
-																	
-																	FROM attendance  att
-																
-																WHERE
-																	att.transaction_date = '". date('Y-m-d',strtotime($date)) ."'
-															";
-												$data = fetchData($con,$query);
 												if($data->num_rows > 0)
 												{
 													while($row = $data->fetch_array())
